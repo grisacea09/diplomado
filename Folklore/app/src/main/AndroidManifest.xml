@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <queries>
         <intent>
@@ -28,10 +30,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Folklore"
         tools:targetApi="31">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_apikey"/>
+
+
+        <activity
+            android:name=".view.activities.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activities.DetalleVideo"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.SplashScreen"
             android:exported="true"
@@ -46,7 +56,7 @@
         <activity
             android:name=".view.activities.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"

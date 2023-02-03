@@ -15,8 +15,12 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+            startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
             finish()
+
+
+
         }, 3000)
 
     }

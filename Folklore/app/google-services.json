@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "893623039314",
+    "project_id": "folklore-99ad3",
+    "storage_bucket": "folklore-99ad3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893623039314:android:ff5b84b88f121e53e7368b",
+        "android_client_info": {
+          "package_name": "com.intercam.folklore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893623039314-ommcrq0p08mc83ooe72fdnvl1gut52lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADHwTJU-MJMcfUGebS3yFV3St3IL3o7_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893623039314-ommcrq0p08mc83ooe72fdnvl1gut52lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

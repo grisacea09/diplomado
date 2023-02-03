@@ -8,9 +8,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.intercam.folklore.R
 import com.intercam.folklore.adapter.VestimentaAdapter
 import com.intercam.folklore.companion.Api
 import com.intercam.folklore.databinding.ActivityMainBinding
+import com.intercam.folklore.model.Ubicacion
 import com.intercam.folklore.model.detalleVestimenta
 import com.intercam.folklore.model.vestimenta
 import kotlinx.coroutines.CoroutineScope
@@ -27,12 +30,34 @@ class MainActivity() : AppCompatActivity() {
    // lateinit var  youTubePlayerInit: YouTubePlayer.OnInitializedListener
    private val TAG = "MainActivity"
 
+    companion object {
+        var email = ""
+        var entidad = arrayOfNulls<String>(13)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+
+        intent.extras?.let {
+            if (it.containsKey("mail")) {
+              val mail = it.getString("mail")
+               email= mail.toString()
+                Log.i("main", "el email es :"+email)
+
+            }
+        }
+
+        Glide.with(this@MainActivity)
+            .load("https://imagenes.elpais.com/resizer/bG7q-LMtX8dla6SqvKvQ0sqBd78=/1960x1470/cloudfront-eu-central-1.images.arcpublishing.com/prisa/DYU3PKV7HJBF7NB7GCJDI5YTHI.jpg")
+            .circleCrop()
+            .into(binding.profile)
+
+        binding.tvUsuario.text = email
 
         CoroutineScope(Dispatchers.IO).launch {
             val call =Api.service.getVestimenta()
@@ -44,9 +69,9 @@ class MainActivity() : AppCompatActivity() {
                 ) {
                     Log.d(TAG, "respuesta del server: ${response.toString()}")
                     Log.d(TAG, "datos del server: ${response.body().toString()}")
-
-                    val gametmp: vestimenta
-
+                    for(i in 0..12){
+                        entidad[i]= response.body()?.get(i)?.estado
+                    }
 
                     binding.pbConexion.visibility = View.GONE
                     binding.rvMenu.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -83,8 +108,8 @@ var context = this.applicationContext
                 ) {
                     Log.d(TAG, "respuesta del server: ${response.toString()}")
                     Log.d(TAG, "datos del server: ${response.body().toString()}")
-
-
+                    Log.e(TAG, ""+response.body()?.latitud+ response.body()?.longitud)
+                    Log.e(TAG, ""+response.body()?.desc_danza)
 
                     val intent = Intent(context, DetalleVideo::class.java).apply {
                         putExtra("ID", ves.id)
@@ -94,9 +119,15 @@ var context = this.applicationContext
                         putExtra("VIDEO_DANZA", response.body()?.video_danza)
                         putExtra("VESTIDO", response.body()?.vestido)
                         putExtra("INFORMACION", response.body()?.informacion)
-                        putExtra("UBICACION", response.body()?.ubicacion)
+                            putExtra("LATITUD", response.body()?.latitud )
+                            putExtra("LONGITUD", response.body()?.longitud )
+                        var index= ves.id-1
+                        putExtra("ENTIDAD", entidad[index] )
+
+
                     }
                     startActivity(intent)
+                    overridePendingTransition(R.anim.left_in, R.anim.left_out);
                     finish()
 
                 }
@@ -120,5 +151,7 @@ var context = this.applicationContext
         //Hay que llaamar al activity con el intent y pasar dos datos el id y el nombre de la etnia
 
     }
+
+
 
 }
